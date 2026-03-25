@@ -16,7 +16,9 @@ test.beforeEach(async ({ page }) => {
     username: `${faker.person.firstName()}_${faker.person.lastName()}`,
     email: faker.internet.email(),
     password: faker.internet.password(),
+    
   };
+  
 
   await signUpPage.open();
   await signUpPage.fillUsernameField(user.username);
@@ -26,11 +28,17 @@ test.beforeEach(async ({ page }) => {
   await homePage.assertYourFeedTabIsVisible();
 });
 
-test('Creat an article without required fields', async () => {
+test('Creat an article without article description', async () => {
+  const article = {
+    title: faker.lorem.words(3),
+  };
+
   await homePage.clickNewArticleLink();
 
+  await createArticlePage.fillArticleTitle(article.title);
   await createArticlePage.clickPublishArticleButton();
+
   await createArticlePage.assertErrorMessageContainsText(
-    'Article title cannot be empty',
+    'Article description cannot be empty',
   );
 });

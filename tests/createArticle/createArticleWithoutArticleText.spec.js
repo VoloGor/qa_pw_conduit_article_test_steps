@@ -17,6 +17,7 @@ test.beforeEach(async ({ page }) => {
     email: faker.internet.email(),
     password: faker.internet.password(),
   };
+  
 
   await signUpPage.open();
   await signUpPage.fillUsernameField(user.username);
@@ -26,11 +27,19 @@ test.beforeEach(async ({ page }) => {
   await homePage.assertYourFeedTabIsVisible();
 });
 
-test('Creat an article without required fields', async () => {
+test('Creat an article without article description', async () => {
+  const article = {
+    title: faker.lorem.words(3),
+    description: faker.lorem.words(5),
+  };
+
   await homePage.clickNewArticleLink();
 
+  await createArticlePage.fillArticleTitle(article.title);
+  await createArticlePage.fillArticleDescription(article.description);
   await createArticlePage.clickPublishArticleButton();
+
   await createArticlePage.assertErrorMessageContainsText(
-    'Article title cannot be empty',
+    'Article body cannot be empty',
   );
 });
