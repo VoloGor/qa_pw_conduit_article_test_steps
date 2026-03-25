@@ -31,11 +31,14 @@ test.beforeEach(async ({ page }) => {
 test('Creat an article without article description', async () => {
   const article = {
     title: faker.lorem.words(3),
+    body: faker.lorem.words(10),
+    
   };
 
   await homePage.clickNewArticleLink();
 
   await createArticlePage.fillArticleTitle(article.title);
+  await createArticlePage.fillArticleBody(article.body);
   await createArticlePage.clickPublishArticleButton();
 
   await createArticlePage.assertErrorMessageContainsText(

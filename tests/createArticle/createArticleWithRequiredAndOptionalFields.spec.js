@@ -45,7 +45,6 @@ test('Creat an article with required and optionalfields', async () => {
   await createArticlePage.fillArticleBody(article.body);
   await createArticlePage.fillArticleTags(article.tags);
   await createArticlePage.clickPublishArticleButton();
-  await createArticlePage.clickPublishArticleButton();
 
   await articlePage.assertArticleTitleIsVisible(article.title);
   await articlePage.assertArticleBodyIsVisible(article.body);
